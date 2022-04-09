@@ -16,10 +16,11 @@ import captainamerica from '../img/captainAmerica.png'
 
 export const images = { "ironman": ironman, "blackwidow": blackwidow, "superman": superman, "captainmarvel": captainmarvel, "thor": thor, "greenlantern": greenlantern, "spiderman": spiderman, "captainamerica": captainamerica, "aquaman": aquaman, "batman": batman, "wonderwoman": wonderwoman, "antman": antman, "flash": flash }
 
-export function imag(username) {
-    let x = ''
-    Object.entries(images).map(h => {
-        if (h[0] === username) { x = h[1] }
+export function imageName(username) {
+    let heroImage = ''
+    Object.entries(images).map(hero => {
+        if (hero[0] === username) { heroImage = hero[1]}
+        return heroImage
     })
-    return x
+    return heroImage
 }

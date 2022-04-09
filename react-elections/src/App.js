@@ -1,7 +1,5 @@
-import { Name } from "./JSX"
+import { Home } from "./JSX/Home"
 export default function App() {
-  console.log('Teste no console do navegador')
-
   return (
     <div>
       <header>
@@ -15,7 +13,7 @@ export default function App() {
       <main>
         <div className="container mx-auto p-4 flex-row items-center ">
           <h2 className="flex items-center justify-center mb-4">Seleccione Um Municipio</h2>
-          <Name/>
+          <Home/>
         </div>
       </main>
     </div>
