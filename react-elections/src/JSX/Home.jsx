@@ -1,27 +1,39 @@
 import { useEffect, useState } from "react";
-import { cities } from "../JS/API";
+import { getData } from "../JS/API";
 import '../index.css'
 import { imageName } from "./images"
 import ClipLoader from "react-spinners/ClipLoader";
+import { FcRemoveImage } from "react-icons/fc";
 
 
-console.log(cities)
+const style = { height: "150px", width: "150px", marginBottom: "20px" }
 export function Home() {
     const [idd, setIdd] = useState(0)
     const [cityselec, setCityselec] = useState('')
+    const [start, setStart] = useState(false)
+    const [cities, setCities] = useState([])
 
     useEffect(() => {
-        setCityselec(cities[idd])
-    }, [cities, idd]);
+        let helper = []
+        if (cities.length === 0) {
+            async function api() {
+                helper = await getData()
+                setCities(helper)
+                setCityselec(cities[idd])
+            } api()
+        } else {setCityselec(cities[idd])}
 
-    function hv({ name, votes, percentage, username }, i) {
+        
+    }, [idd, start]);
+
+    function candidates({ name, votes, percentage, username }, i) {
         let text = 'Não Eleito'
         let sty = 'text-orange-600 flex justify-around'
 
         if (i == 0) { text = "Eleito"; sty = 'text-green-600 flex justify-around' }
         if (!votes == 0) {
             return (
-                <div className="grid-cols-2 shadow-lg  justify-around p-5  items-center ">
+                <div key={`candidate${i}`} className="grid-cols-2 shadow-lg  justify-around p-5  items-center ">
                     <div className="flex justify-around">
                         <div className="">
                             <img className="h-20 w-20 rounded-full" alt="imagem de heroi" src={imageName(username)}></img>
@@ -37,10 +49,20 @@ export function Home() {
             )
         }
     }
-    if (cities === undefined | cityselec == '' | cityselec == undefined) {
+    if (cities === undefined || cityselec === '' || cityselec === undefined) {
+        setTimeout(() => {
+            if (start === true) {
+                return (
+                    <div className="flex flex-col items-center justify-center">
+                        <FcRemoveImage style={style} />
+                        Ative o backend
+                    </div>
+                )
+            }
+        }, 500);
         return (
             <div className="flex flex-col items-center justify-center"> <ClipLoader />
-                <button className="border-solid border-4 rounded-lg shadow-md p-2 m-3" onClick={() => setIdd(idd + 1)} >Tente novamente</button>
+                {(() => { setTimeout(() => setStart(true), 500) })()}
             </div>
         )
     }
@@ -49,7 +71,7 @@ export function Home() {
         <div className="items-center ">
             <div className="flex items-center justify-center mb-2">
                 <select className="bg-white shadow-md rounded-full" onChange={evt => setIdd(evt.target.value)}>
-                    {cities.map(obj => <option value={obj.id2}>{obj.name}</option>)}
+                    {cities.map((obj, i) => <option key={`city${i}`} value={obj.id2}>{obj.name}</option>)}
                 </select>
             </div>
             <div className="border-2 border-grey-900 p-4">
@@ -62,7 +84,7 @@ export function Home() {
                     </div>
                     <div className=" flex font-semibold justify-center"> {cityselec.participants} candidatos</div>
                     <div className="grid grid-cols-4 gap-4 ">
-                        {cityselec.heroes.map((H, i) => { return <> {hv(H, i)} </> })}
+                        {cityselec.heroes.map((H, i) => { return <> {candidates(H, i)} </> })}
                     </div>
                 </div>
             </div>
