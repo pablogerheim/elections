@@ -1,5 +1,5 @@
-//import { data } from "./data"
-import axios from "axios"
+import { data } from "./data"
+//import axios from "axios"
 let cities = []
 
 function percentage(votes, presenca) {
@@ -16,16 +16,16 @@ function voting({ cityId, candidateId, votes }, i, j, arrcit, arrheroes) {
 }
 
 async function getData() {
-    let objcit = await axios.get('http://localhost:3001/cities')
-    let objheroes = await axios.get('http://localhost:3001/candidates')
-    let objvoter = await axios.get('http://localhost:3001/election')
-    let arrcit = [...objcit.data]
-    let arrheroes = [...objheroes.data]
-    let arrvoter = [...objvoter.data]
+    // let objcit = await axios.get('http://localhost:3001/cities')
+    // let objheroes = await axios.get('http://localhost:3001/candidates')
+    // let objvoter = await axios.get('http://localhost:3001/election')
+    // let arrcit = [...objcit.data]
+    // let arrheroes = [...objheroes.data]
+    // let arrvoter = [...objvoter.data]
 
-    // let arrcit = [...data.cities]
-    // let arrheroes = [...data.candidates]
-    // let arrvoter = [...data.election]
+    let arrcit = [...data.cities]
+    let arrheroes = [...data.candidates]
+    let arrvoter = [...data.election]
 
     for (let i = 0; i < 5; i++) {
 

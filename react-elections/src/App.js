@@ -12,7 +12,7 @@ export default function App() {
 
       <main>
         <div className="container mx-auto p-4 flex-row items-center ">
-          <h2 className="flex items-center justify-center mb-4">Seleccione Um Municipio</h2>
+          <h2 className="flex items-center justify-center mb-4">Selecione Um Municipio</h2>
           <Home/>
         </div>
       </main>
